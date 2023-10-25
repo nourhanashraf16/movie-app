@@ -1,0 +1,42 @@
+.movie_details .row {
+  position: relative;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 80vh;
+  width: 100%;
+}
+
+.movie_details_img {
+  width: 200px;
+  position: absolute;
+  bottom: -18%;
+  left: 7%;
+}
+
+.movie_details_content {
+  color: #fff;
+  padding-top: 16px;
+}
+.movie_details_description {
+  font-size: 18px;
+}
+/* small */
+@media (max-width: 768px) {
+  .movie_details {
+    padding: 20px 0;
+  }
+  .movie_details .row {
+    max-width: 540px !important;
+    background-image: none !important;
+    margin: auto;
+  }
+  .movie_details_img {
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 100%;
+  }
+  .movie_details_content {
+    color: black;
+  }
+}
