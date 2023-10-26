@@ -9,7 +9,7 @@ import {Movies} from "./components/Movies";
 import {TvShows} from "./components/TvShows";
 import {Celebs} from "./components/Celebs";
 import { MovieDetails } from './components/MovieDetails';
-import { Search } from "./components/Search"
+
 export const App = () => {
   return (
     <BrowserRouter>
@@ -21,7 +21,6 @@ export const App = () => {
                 <Route path='/tv-shows' element={<TvShows/>}/>
                 <Route  path='/celebs' element={<Celebs/>}/>
                 <Route  path='/blog' element={<Blog/>}/>
-                <Route  path='/search' element={<Search/>}/>
                 <Route  path='/moviedetails/:mediatype/:id' element={<MovieDetails/>}/>
             </Routes>
         </div>
