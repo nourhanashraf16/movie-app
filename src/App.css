@@ -35,8 +35,10 @@ ul {
 }
 .search .search-bar .search-icon {
   position: absolute;
-  top: 0.75rem;
+  top: 0.5rem;
   font-size: 1rem;
   font-weight: 700;
   right: 1rem;
+  border: none;
+  background-color: transparent;
 }

@@ -4,6 +4,7 @@ import { fetchMovies } from "../redux/slices/moviesSlice";
 import { Link } from "react-router-dom";
 import { BsSearch } from 'react-icons/bs';
 import { useSearch } from "../hooks/useSearch";
+import { useSelect } from "../hooks/useSelect";
 
 export const MoviesList = () => {
   const dispatch = useDispatch();
@@ -12,7 +13,9 @@ export const MoviesList = () => {
   }, []);
   const movies = useSelector((store) =>  store.moviess.moviesList );
   console.log(movies);
-  const {handleInput , querry , searchResult} =useSearch()
+
+  const {handleInput , querry , searchResult} =useSearch();
+  const {selectedMediaType, handleSelect} = useSelect()
   return (
     <>
      <section className='search py-5'>
@@ -32,6 +35,16 @@ export const MoviesList = () => {
                         </button>
                     </div>
                 </div>
+                <div className="col-md-2 offset-md-2">
+                   <select class="form-select" aria-label="Default select example" 
+                   onChange={(e)=>handleSelect(e.target.value)}
+                   value={selectedMediaType}>
+                       <option selected value="all">all-MediaType</option>
+                       <option value="movie">movie</option>
+                       <option value="tv">tv</option>
+                       <option value="person">person</option>
+                   </select>
+                </div>
             </div>
         </div>
       </section>
@@ -39,24 +52,30 @@ export const MoviesList = () => {
         <div className="container">
           <div className="row">
             {querry && searchResult.length > 0? (
-              searchResult.map((movie) => (
-                <div className="col-md-6 col-lg-3 movie_item" key={movie.id}>
-                  <div className="movie_content">
-                    <figure>
-                      <Link to={`/moviedetails/${movie.media_type}/${movie.id}`}>
-                        <img
-                          src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
-                          alt="movie-img"
-                        />
-                      </Link>
-                    </figure>
-                    <h5>{movie.title ? movie.title : movie.name}</h5>
-                  </div>
-                </div>
-              ))
+              searchResult.map((movie) => {
+                if(movie.media_type === selectedMediaType || !selectedMediaType || selectedMediaType ==="all"){
+                  return (
+                    <div className="col-md-6 col-lg-3 movie_item" key={movie.id}>
+                      <div className="movie_content">
+                        <figure>
+                          <Link to={`/moviedetails/${movie.media_type}/${movie.id}`}>
+                            <img
+                              src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
+                              alt="movie-img"
+                            />
+                          </Link>
+                        </figure>
+                        <h5>{movie.title ? movie.title : movie.name}</h5>
+                      </div>
+                    </div>
+                  )
+                }})
             ) : (
-              movies.map((movie) => (
-                <div className="col-md-6 col-lg-3 movie_item" key={movie.id}>
+              movies.map((movie) => { 
+                if(  movie.media_type === selectedMediaType ||
+                  !selectedMediaType ||selectedMediaType ==="all"){
+                    return (
+                          <div className="col-md-6 col-lg-3 movie_item" key={movie.id}>
                   <div className="movie_content">
                     <figure>
                       <Link to={`/moviedetails/${movie.media_type}/${movie.id}`}>
@@ -69,7 +88,10 @@ export const MoviesList = () => {
                     <h5>{movie.title ? movie.title : movie.name}</h5>
                   </div>
                 </div>
-              ))
+                    )
+                  }
+                return null
+             })
             )}
           </div>
         </div>
